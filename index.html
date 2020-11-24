@@ -1,2 +1,223 @@
-<h1>Hi random person reading this hope you have a great day!👋🥰</h1>
-<img src="https://quotecatalog.imgix.net/assets/asset-JKtcRNcIcaA5BjSp15I98rnG/original.jpg" alt="Michael Scott Quote" >
+<!DOCTYPE html>
+<title>Gossip Girl Episode Generator</title>
+<html>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+
+<head>
+    <style>
+        
+        body {background-color: #f3eac2;}
+
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            color:#ec524b;
+        }
+
+        h2 {
+            font-family: 'Poppins', sans-serif;
+            color: #f5b461;
+        }
+
+        h3 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        p {
+            font-family: 'Poppins', sans-serif;
+            
+        }
+
+        button {
+            background-color:#9ad3bc;
+            margin: 10px;
+            padding: 12px 28px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+
+            display: block;
+            color: #fff;
+            border: none;
+            border-color: none;
+            transition: 0.15s;
+            display: inline-block;
+
+        }
+
+        button:hover,
+        .button2 {
+            text-decoration: none;
+            transform: scale(1.1);
+        }
+
+        button:focus,
+        textarea:focus,
+        .button2 {
+            outline: 0;
+        }
+
+        button:active,
+        .button2 {
+            text-decoration: none;
+            transform: scale(1.05);
+        }
+
+        #displayMoodEpisode {
+            font-family: 'Poppins', sans-serif;
+            color: #f5b461;
+        }
+
+        #displayRandomEpisode {
+            font-family: 'Poppins', sans-serif;
+            color: #f5b461;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <h1>Gossip Girl Episode Generator</h1>
+    <h2>What episode should you watch today?</h2>
+
+    <h3>Location? 🌍</h3>
+    <div class="question">
+        <button id="button2">NYC</button>
+        <button id="button3">Not NYC</button>
+    </div>
+    <h3>Mood? 😝</h3>
+    <div class="question">
+        <button id="button4" onclick="newMoodEpisode()">Sad</button>
+        <button id="button5" onclick="newMoodEpisode()">Happy</button>
+    </div>
+    <br>
+    <p>The episode you should watch today is:</p>
+    <div id="displayMoodEpisode">
+
+    </div>
+    <br>
+    <button id="button6">Reset</button>
+    <br>
+    <br>
+    <h3>Or you just want a random episode?</h3>
+    <button onclick="newEpisode()">Random Episode</button>
+    <div id="displayRandomEpisode">
+    </div>
+    <iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" height="450" style="width:100%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/she-chat-podcast/id1505540169"></iframe>
+
+
+    <script>
+
+        var randomEpisode = [
+            "Season 1, Episode 9: Blair Waldorf Must Pie!",
+            "Season 2, Episode 11: The Magnificent Archiblads",
+            "Season 3, Episode 11: The Treasure of Serena Madre",
+            "Season 4, Episode 10: Gaslit",
+            "Season 6, Episode 8: It’s Really Complicated",
+            "Season 1, Episode 11: Roman Holiday",
+            "Season 2, Episode 12: It’s A Wonderful Lie",
+        ]
+
+        function newEpisode() {
+            var randomNumber = Math.floor(Math.random() * (randomEpisode.length));
+            document.getElementById("displayRandomEpisode").innerHTML = randomEpisode[randomNumber];
+        }
+
+        
+        var button2 = document.getElementById("button2");
+
+        //array for NYC episodes 
+        nycArray = [ 
+        {isHappy:true, ep_name: "Season One, Episode One: Pilot"}, 
+        {isHappy:true, ep_name: "Season One, Episode Nine: Blair Waldorf Must Pie!"}, 
+        {isHappy:true, ep_name: "Season Three, Episode Twenty Two: Last Tango, Then Paris"},
+        {isHappy:false, ep_name: "Season Five, Episode Ten: Riding in Town Cars with Boys"},
+        {isHappy:false, ep_name: "Season Five, Episode Thirteen: G.G"},
+        {isHappy:false, ep_name: "Season Six, Episode Ten: New York, I Love You, XOXO",}
+        ]
+        
+        var moodArray = []
+
+        // if NYC button is pressed, NYC array transfers to moodArray 
+        button2.onclick = function () {
+            moodArray.push.apply(moodArray, nycArray);
+
+
+        };
+
+        // array for not NYC episodes 
+        var button3 = document.getElementById("button3");
+        notNycArray = [
+            {isHappy:true, ep_name: "Season Two, Episode One: Summer, Kind of Wonderful "},
+            {isHappy:false, ep_name: "Season Two, Episode Two: Never Been Marcused "},
+            {isHappy:false, ep_name: "Season Four, Episode One: Belles de Jour "},
+            {isHappy:false, ep_name: "Season Four, Episode Two: Double Identity"},
+            {isHappy:true, ep_name: "Season Five, Episode One: Yes, Then Zero "},
+            {isHappy:true, ep_name: "Season Five, Episode Two: Beauty and the Feast"},
+        ];
+
+        // empty array to use after mood array 
+        options_array = [];
+
+        // if not NYC button is pressed, not NYC array transfers to moodArray 
+        button3.onclick = function () {
+            moodArray.push.apply(moodArray, notNycArray);
+
+
+        };
+
+        // if button 4 (sad) is pressed, put all objects with isHappy = false in the options_array, then randomly pick an episode from options_array
+        var button4 = document.getElementById("button4");
+
+        var i; 
+        button4.onclick = function newMoodEpisode() {
+            for (i=0; i < moodArray.length; i++) {
+                if (moodArray[i].isHappy === false) {
+                    options_array.push.apply(options_array, moodArray);
+                
+                }
+                
+        }
+            
+                var randomNumber = Math.floor(Math.random() * (options_array.length));
+                document.getElementById("displayMoodEpisode").innerHTML = options_array[randomNumber].ep_name;
+                
+        }
+
+        // if button 5 (happy) is pressed, put all objects with isHappy = true in the options_array, then randomly pick an episode from options_array
+        var button5 = document.getElementById("button5");
+
+        var i; 
+        button5.onclick = function newMoodEpisode() {
+            for (i=0; i < moodArray.length; i++) {
+                if (moodArray[i].isHappy === true) {
+                    options_array.push.apply(options_array, moodArray);
+                
+                }
+                
+        }
+            
+                var randomNumber = Math.floor(Math.random() * (options_array.length));
+                document.getElementById("displayMoodEpisode").innerHTML = options_array[randomNumber].ep_name;
+                
+        }
+
+
+            
+            var button6 = document.getElementById("button6");
+
+            button6.onclick = function(){
+                options_array = [];
+                document.getElementById("displayMoodEpisode").innerHTML = "";
+
+            } 
+
+    </script>
+
+</body>
+
+</html>
